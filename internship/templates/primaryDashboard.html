@@ -1,0 +1,345 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Internship Dashboard</title>
+	<link rel="stylesheet" href="dashboard.css" />
+	<style>
+		@import url("https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap");
+
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+			font-family: Fredoka;
+		}
+
+		header {
+			position: sticky;
+			top: 0px;
+			max-width: 100vw;
+		}
+
+		.name {
+			color: white;
+			font-size: 18px;
+			margin-left: 10px;
+		}
+
+		.navbar {
+			max-width: 100vw;
+			background: rgb(158, 43, 158);
+			/* overflow: hidden; */
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: 10px;
+		}
+
+		.navbar img {
+			height: 40px;
+			/* width: auto; */
+		}
+
+		.navbar ul {
+			list-style-type: none;
+			margin: 0;
+			padding: 0;
+		}
+
+		.navbar li {
+			display: inline;
+		}
+
+		.navbar li a {
+			color: white;
+			text-decoration: none;
+			padding: 10px 20px;
+			border-radius: 20px;
+			transition: background-color 0.3s;
+		}
+
+		.navbar li a:hover {
+			background-color: #333;
+		}
+
+		.active {
+			background-color: rgba(212, 158, 212, 0.646);
+		}
+
+		.wrapper {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+
+		.container {
+			margin-top: 10px;
+			display: flex;
+			flex-wrap: wrap;
+			width: 90vw;
+			justify-content: center;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+			border-radius: 10px;
+			/* padding: 10px 20px; */
+			background-color: #ffffff;
+		}
+
+		.item1 {
+			margin: 10px;
+			background-color: rgba(212, 158, 212, 0.646);
+			padding: 20px;
+			border-radius: 10px;
+			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+			cursor: pointer;
+			transition: transform 0.3s, box-shadow 0.3s;
+		}
+
+		.item1:hover {
+			transform: translateY(-5px);
+			box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+		}
+
+		.container .item1.selected {
+			background-color: rgb(168, 35, 168);
+		}
+
+		.box {
+			/* width: 80%; Adjust the width as needed */
+			max-width: 80vw;
+			/*Limiting maximum width for better readability */
+			height: fit-content;
+			margin: 20px auto;
+			/* Center the box */
+			background-color: plum;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			padding: 10px;
+			box-shadow: 0 0 10px rgba(4, 4, 4, 0.1);
+			transition: box-shadow 0.3s ease-in-out;
+			/* Add transition for box shadow */
+		}
+
+		.box:hover {
+			box-shadow: #555;
+			/* Change box shadow on hover */
+		}
+
+		.total {
+			display: flex;
+			width: 90vw;
+			margin-top: 20px;
+			padding: 0 15vw;
+		}
+
+		.piechart {
+			width: 50%;
+			height: px;
+		}
+
+		.data {
+			flex-direction: row;
+			display: flex;
+			width: 60%;
+			align-items: center;
+			color: purple;
+			text-align: center;
+			justify-content: space-evenly;
+			align-items: center;
+			font-size: 1.5rem;
+			overflow: hidden;
+		}
+
+		.total-container,
+		.data {
+			padding: 10px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			box-shadow: 0 0 10px rgba(4, 4, 4, 0.1);
+			transition: box-shadow 0.3s ease-in-out;
+		}
+
+		.total-container:hover,
+		.data:hover {
+			box-shadow: #555;
+		}
+
+		main {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: space-evenly;
+			height: 80vh;
+
+		}
+
+		/* main img {
+			height: 10vh;
+			width: auto;
+		} */
+	</style>
+</head>
+
+<body>
+	<header>
+		<div class="navbar">
+			<img src="{% static 'mitslogo.jpg' %}" alt="" id="image" />
+			<div class="name">MADANAPALLE INSTITUTE OF TECHNOLOGY AND SCIENCE</div>
+			<ul>
+				<li><a class="active" href="{% url 'primaryDashboard' %}">Home</a></li>
+				<li><a href="{% url 'custom_login' %}">Internships</a></li>
+				{% if User is None %}
+				<li>
+					<a href="custom_login"><i class="fa fa-fw fa-user"></i>Login</a>
+				</li>
+				{% else %}
+				<li>
+					<a href="custom_login"><i class="fa fa-fw fa-user"></i>{{User.first_name}}</a>
+				</li>
+				{% endif %}
+			</ul>
+		</div>
+	</header>
+	<main>
+		<div class="wrapper">
+			<div class="container">
+				<div class="item1" id="cse">CSE</div>
+				<div class="item1" id="csd">CSD</div>
+				<div class="item1" id="cai">CAI</div>
+				<div class="item1" id="cst">CST</div>
+				<div class="item1" id="csc">CSC</div>
+				<div class="item1" id="ece">ECE</div>
+				<div class="item1" id="eee">EEE</div>
+				<div class="item1" id="mech">MECH</div>
+				<div class="item1" id="civil">CIVIL</div>
+				<div class="item1" id="mba">MBA</div>
+				<div class="item1" id="mca">MCA</div>
+			</div>
+		</div>
+		<div class="data" id="statisticalData"></div>
+	</main>
+	<script>
+		const items = document.querySelectorAll('.item1');
+		items.forEach(item => {
+			item.addEventListener('click', function () {
+				items.forEach(i => i.classList.remove('selected'));
+				this.classList.add('selected');
+			});
+		});
+
+		const departmentData = {
+			'CSE': {
+				students_enrolled: 200,
+				internships: 50,
+				ongoing: 20,
+				completed: 30
+			},
+			'CSD': {
+				students_enrolled: 300,
+				internships: 40,
+				ongoing: 10,
+				completed: 40
+			},
+			'CAI': {
+				students_enrolled: 400,
+				internships: 90,
+				ongoing: 80,
+				completed: 10
+			},
+			'CST': {
+				students_enrolled: 100,
+				internships: 70,
+				ongoing: 50,
+				completed: 5
+			},
+			'CSC': {
+				students_enrolled: 500,
+				internships: 70,
+				ongoing: 50,
+				completed: 5
+			},
+			'ECE': {
+				students_enrolled: 300,
+				internships: 100,
+				ongoing: 80,
+				completed: 2
+			},
+			'EEE': {
+				students_enrolled: 100,
+				internships: 30,
+				ongoing: 20,
+				completed: 10
+			},
+			'MECH': {
+				students_enrolled: 70,
+				internships: 50,
+				ongoing: 20,
+				completed: 5
+			},
+			'CIVIL': {
+				students_enrolled: 80,
+				internships: 50,
+				ongoing: 10,
+				completed: 2
+			},
+			'MBA': {
+				students_enrolled: 60,
+				internships: 30,
+				ongoing: 34,
+				completed: 6
+			},
+			'MCA': {
+				students_enrolled: 90,
+				internships: 70,
+				ongoing: 50,
+				completed: 5
+			}
+			// Add data for other departments as needed
+		};
+
+		function displayDepartmentData(department, imageSource) {
+			const data = departmentData[department];
+			const statisticalDataDiv = document.getElementById('statisticalData');
+			statisticalDataDiv.innerHTML = `
+				<img src="${imageSource}" alt="${department} Image" style=" width:30%; float:left; margin-right:10px;">
+				<div style="margin-left: 10px;">
+				<p>No of Students: ${data.students_enrolled}</p>
+				<p>Status of Internships: ${data.internships}</p>
+				<p>Ongoing Internships: ${data.ongoing}</p>
+				<p>Completed Internships: ${data.completed}</p>
+				</div>
+				<div style="clear:both ;"></div>
+			`;
+		}
+
+		const cseButton = document.getElementById('cse');
+		cseButton.addEventListener('click', () => displayDepartmentData('CSE', "{% static 'CSE.png' %}"));
+		const csdButton = document.getElementById('csd');
+		csdButton.addEventListener('click', () => displayDepartmentData('CSD', "{% static 'CSD.png' %}"));
+		const caiButton = document.getElementById('cai');
+		caiButton.addEventListener('click', () => displayDepartmentData('CAI', "{% static 'CAI.png' %}"));
+		const cstButton = document.getElementById('cst');
+		cstButton.addEventListener('click', () => displayDepartmentData('CST', "{% static 'CST.png' %}"));
+		const cscButton = document.getElementById('csc');
+		cscButton.addEventListener('click', () => displayDepartmentData('CSC', "{% static 'CSC.png' %}"));
+		const eceButton = document.getElementById('ece');
+		eceButton.addEventListener('click', () => displayDepartmentData('ECE', "{% static 'ECE.png' %}"));
+		const eeeButton = document.getElementById('eee');
+		eeeButton.addEventListener('click', () => displayDepartmentData('EEE', "{% static 'EEE.png' %}"));
+		const mechButton = document.getElementById('mech');
+		mechButton.addEventListener('click', () => displayDepartmentData('MECH', "{% static 'MECH.png' %}"));
+		const civilButton = document.getElementById('civil');
+		civilButton.addEventListener('click', () => displayDepartmentData('CIVIL', "{% static 'CIVIL.png' %}"));
+		const mbaButton = document.getElementById('mba');
+		mbaButton.addEventListener('click', () => displayDepartmentData('MBA', "{% static 'MBA.png' %}"));
+		const mcaButton = document.getElementById('mca');
+		mcaButton.addEventListener('click', () => displayDepartmentData('MCA', "{% static 'MCA.png' %}"));
+		cseButton.click()
+	</script>
+
+</body>
+
+</html>

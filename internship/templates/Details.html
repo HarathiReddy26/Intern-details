@@ -1,0 +1,505 @@
+{% load static %}
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Internship Details</title>
+    <style>
+        @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+        }
+
+        body {
+            background: white;
+            width: 100%;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1px;
+            flex-direction: column;
+            font-family: Arial, Helvetica, sans-serif;
+            overflow: hidden;
+        }
+
+        header {
+            position: sticky;
+            left: 0px;
+            top: 0px;
+            width: 100vw;
+        }
+
+        .navbar {
+            top: 0;
+            left: 0;
+            width: 100%;
+            min-width: 100vw;
+            min-width: 100vw;
+            background-color: rgb(158, 43, 158);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            margin-top: 0px;
+        }
+
+        .navbar img {
+            height: 40px;
+            width: auto;
+        }
+
+        .navbar ul {
+            list-style-type: none;
+            display: flex;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        .navbar ul li {
+            margin-right: 10px;
+        }
+
+        .navbar li {
+            display: inline-block;
+            margin: 0 7px;
+        }
+
+        .navbar li a {
+            float: left;
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .navbar #mybtn {
+            color: white;
+            display: flex;
+            align-items: center;
+            border-radius: 50px;
+        }
+
+        .navbar #mybtn .username {
+            margin-right: 5px;
+            font-size: 20px;
+        }
+
+        .navbar #mybtn svg {
+            width: 70px;
+            height: 35px;
+            fill: white;
+            cursor: pointer;
+        }
+
+        .navbar li a:hover {
+            background-color: #333;
+        }
+
+        .active {
+            background-color: rgba(212, 158, 212, 0.646);
+        }
+
+        @media screen and (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .navbar ul {
+                margin-top: 10px;
+            }
+
+            .navbar li {
+                display: block;
+                margin-bottom: 5px;
+            }
+
+            .navbar li a {
+                padding: 8px 15px;
+            }
+        }
+
+        .container {
+            width: 80%;
+            height: 100%;
+            background-color: white;
+        }
+
+        .leftbar {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-start;
+            background-color: #726cf8;
+            background-image: linear-gradient(315deg, #726cf8 0%, #e975a8 74%);
+            border-radius: 10px;
+            width: 20%;
+            height: 100%;
+        }
+
+        .back {
+            text-decoration: none;
+            color: #fff;
+            font-size: 16px;
+            margin-bottom: 20px;
+            padding: 10px;
+            width: fit-content;
+        }
+
+        .roll {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: auto;
+            margin-left: 10px;
+            margin-right: 10px;
+            width: calc(100%-20px);
+        }
+
+        .search {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            gap: 5px;
+        }
+
+        #stdno {
+            width: 80%;
+            font-size: 14px;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid white;
+            margin-right: 10px;
+        }
+
+        .searchbutton {
+            background-color: #e975a8;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .searchbutton:hover {
+            box-shadow: 0 0 5px 5px rgba(70, 19, 4, 0.5),
+                0 0 10px 10px rgba(245, 245, 220, 0.7);
+            color: rgb(70, 19, 4);
+            background-color: #726cf8;
+            /* Background color */
+            background-image: linear-gradient(315deg, #726cf8 0%, #e975a8 74%);
+            /* Background gradient */
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        .rollnos {
+            background-color: rgba(245, 245, 220, 0.5);
+            padding: 10px 0;
+            border-radius: 5px;
+            height: 60vh;
+            align-items: center;
+            width: 90%;
+        }
+
+        .rollnos::-webkit-scrollbar {
+            display: none;
+        }
+
+        .rollno {
+            padding: 5px;
+            background-color: white;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            width: 99%;
+            align-items: center;
+        }
+
+        main {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            width: 100vw;
+            gap: 3%;
+            height: 90vh;
+            padding: 10px;
+        }
+
+        #menu {
+            display: none;
+            position: absolute;
+            top: 8vh;
+            /* left: 0vw; */
+            border-radius: 10px;
+            background-color: rgb(158, 43, 158);
+            transition: all 200ms ease-in-out;
+        }
+
+        #menu>li {
+            padding: 10px;
+            color: white;
+        }
+
+        #username {
+            color: white;
+            height: 100%;
+            width: 100%;
+            padding: 10px 20px;
+            .right border-radius: 20px;
+            transition: background-color 0.3s;
+        }
+
+        #username:hover {
+            background-color: #333;
+            cursor: pointer;
+        }
+
+        .studentDetails {
+            display: flex;
+            padding: 20px;
+            height: 40%;
+            font-size: 2em;
+            flex-direction: column;
+            justify-content: space-around;
+        }
+
+        .column {
+            width: 100%;
+            font-size: 1em;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .studetail {
+            width: 50%;
+        }
+
+        .internships {
+            height: 60%;
+            padding: 10px;
+            overflow: auto;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .internships::-webkit-scrollbar {
+            display: none;
+        }
+
+        .internship {
+            display: flex;
+            background: linear-gradient(315deg, #726cf8 0%, #e975a8 74%);
+            border-radius: 20px;
+            padding: 0px 20px;
+            color: white;
+            flex-direction: row;
+            align-items: center;
+        }
+
+        .interndetails {
+            width: 70%;
+            height: 50vh;
+            display: flex;
+            font-size: 1.4em;
+            flex-direction: column;
+            justify-content: space-evenly;
+        }
+
+        .certificate {
+            width: 30%;
+        }
+
+        .certificate img {
+            height: 100%;
+            width: 100%;
+            padding: 10px;
+        }
+
+        .newstudent {
+            font-size: 15px;
+            background-color: #e975a8;
+            color: #fff;
+            padding: 10px 20px;
+            text-align: center;
+            outline: none;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 150ms ease-in-out;
+            cursor: pointer;
+            align-self: center;
+            margin-top: auto;
+            margin-bottom: 20px;
+        }
+
+        .addInternship {
+            background-image: linear-gradient(315deg, #726cf8 0%, #e975a8 74%);
+            transition: all 0.3s linear;
+            padding: 10px;
+            width: fit-content;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .addInternship a {
+            color: #fff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <img src="{% static 'mitslogo.jpg' %}" alt="" id="image">
+            <div class="name">MADANAPALLE INSTITUTE OF TECHNOLOGY AND SCIENCE</div>
+            <ul>
+                <li><a href="{% url 'ExclusiveDashboard' %}">Home</a></li>
+                <li><a class="active" href="{% url 'Details' %}">Students</a></li>
+                <li id="mybtn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                        class="bi bi-person-circle" viewBox="0 0 16 16" id="icon">
+                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                        <path fill-rule="evenodd"
+                            d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
+                    </svg>
+                    <div id="username">{{ User.first_name }}</div>
+                    <ul id="menu">
+                        <li><a href="{% url 'create_student' %}">Add Students</a></li>
+                        <li><a href="{% url 'addInternship' %}">Add Internships</a></li>
+                        <li><a href="{% url 'custom_logout' %}">Logout </a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </header>
+    <main>
+        <div class="leftbar">
+            <a href="{% url  'ExclusiveDashboard' %}" class="back">&#60; Back</a>
+            <div class="roll">
+                <div class="search">
+                    <input type="search" name="stdno" id="stdno" placeholder="Enter the Roll No." />
+                    <button class="searchbutton">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+                <div class="rollnos">
+                    {% for x in Students %}
+                    <button class="rollno" id="{{ x.rollno }}">
+                        <div class="rollno">{{x.rollno}}</div>
+                    </button>
+                    {% endfor %}
+                </div>
+            </div>
+            <a class="newstudent" href="{% url 'create_student' %}">NEW STUDENT</a>
+        </div>
+
+        <div class="container">
+            <div class="studentDetails">
+                <h2>Student Details</h2>
+                <div class="column">
+                    <div class="studetail"></div>
+                    <div class="studetail"></div>
+                </div>
+                <div class="column">
+                    <div class="studetail"></div>
+                    <div class="studetail"></div>
+                </div>
+            </div>
+            <div class="internships" id="internships">
+            </div>
+        </div>
+
+    </main>
+    <script>
+        const username = document.getElementById('username')
+        const menu = document.getElementById('menu')
+        menu.style.display = "none";
+        username.addEventListener('click', () => {
+            if (menu.style.display == "none") {
+                menu.style.display = "block";
+            }
+            else {
+                menu.style.display = "none";
+            }
+        })
+        const internshipdata = [
+            {% for i in internship %}
+        {
+            rollno: "{{i.rollno.rollno}}",
+                internId: "{{i.internId}}",
+                    internshipName: "{{i.internshipName}}",
+                        domain: "{{i.domain}}",
+                            projectName: "{{i.projectName}}",
+                                intern_type: "{{i.intern_type}}",
+                                    sdate: "{{i.sdate}}",
+                                        edate: "{{i.edate}}",
+                                            intern_status: "{{i.status}}",
+                                                certificate: "{{i.certificate}}"
+        },
+        {% endfor %}
+        ];
+        const studetails = document.getElementsByClassName("studetail")
+        console.log(studetails)
+        {% for s in Students %}
+        document.getElementById("{{ s.rollno }}").addEventListener('click', () => {
+            console.log("{{ s.rollno }}")
+            studetails[0].innerText = "Name: " + "{{ s.name }}"
+            studetails[1].innerText = "Roll No: " + "{{ s.rollno }}"
+            studetails[2].innerText = "Year: " + "{{ s.year }}"
+            studetails[3].innerText = "Department: " + "{{ s.dept }}"
+            filtereddata = internshipdata.filter(detail => {
+                return detail.rollno == "{{ s.rollno }}"
+            })
+            const internships = document.getElementById('internships');
+            internships.innerHTML = "";
+            filtereddata.forEach(element => {
+                internships.innerHTML = `
+                <div class="internship">
+                    <div class="interndetails">
+                        <div class="column">
+                            <div class="studetail">Internship Name: ${element.internshipName}</div>
+                            <div class="studetail">Project Name: ${element.projectName}</div>
+                        </div>
+                        <div class="column">
+                            <div class="studetail">Domain: ${element.domain}</div>
+                            <div class="studetail">Status: ${element.intern_status}</div>
+                        </div>
+                        <div class="column">
+                            <div class="studetail">Start Date: ${element.sdate}</div>
+                            <div class="studetail">End Date: ${element.edate}</div>
+                        </div>
+                    </div>
+                    <div class="certificate">
+                        <img src="{% static 'mitslogo.jpg' %}" alt="Certificate">
+                    </div>
+                </div>`
+            });
+            const addInternship = document.createElement('div')
+            addInternship.classList.add('addInternship')
+            addInternship.innerHTML = `<a href="{% url 'addInternship' %}">+Add Student</a>`
+            internships.appendChild(addInternship);
+        });
+        {% endfor %}
+    </script>
+</body>
+
+</html>

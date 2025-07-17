@@ -1,0 +1,704 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        height: 100vh;
+        overflow: auto;
+    }
+
+    header {
+        position: sticky;
+        left: 0px;
+        top: 0px;
+        width: 100vw;
+    }
+
+    .name {
+        color: white;
+        font-size: 18px;
+        margin-left: 10px;
+    }
+
+    .navbar {
+        top: 0;
+        left: 0;
+        width: 100%;
+        min-width: 100vw;
+        z-index: 1000;
+        min-width: 100vw;
+        background-color: rgb(158, 43, 158);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        margin-top: 0px;
+    }
+
+    .navbar img {
+        height: 40px;
+        /* width: auto; */
+    }
+
+    .navbar ul {
+        list-style-type: none;
+        display: flex;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+        display: flex;
+    }
+
+    .navbar ul li {
+        margin-right: 10px;
+    }
+
+    .navbar li {
+        display: inline-block;
+        margin: 0 7px;
+    }
+
+    .navbar li a {
+        float: left;
+        display: block;
+        color: white;
+        text-decoration: none;
+        padding: 10px 20px;
+        border-radius: 20px;
+        transition: background-color 0.3s;
+    }
+
+    .navbar #mybtn {
+        color: white;
+        display: flex;
+        align-items: center;
+        border-radius: 50px;
+    }
+
+    .navbar #mybtn .username {
+        margin-right: 5px;
+        font-size: 20px;
+    }
+
+    .navbar #mybtn svg {
+        width: 70px;
+        height: 35px;
+        fill: white;
+        cursor: pointer;
+    }
+
+    .navbar li a:hover {
+        background-color: #333;
+    }
+
+
+    .active {
+        background-color: rgba(212, 158, 212, 0.646);
+    }
+
+    .wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .container {
+        margin-top: 10px;
+        display: flex;
+        flex-wrap: wrap;
+        width: 90vw;
+        justify-content: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        /* padding: 10px 20px; */
+        background-color: #ffffff;
+    }
+
+    .item1 {
+        margin: 10px;
+        background-color: rgba(212, 158, 212, 0.646);
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .item1:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .container .item1.selected {
+        background-color: rgb(168, 35, 168);
+    }
+
+    .cont {
+        display: flex;
+        width: 80vw;
+        min-height: 50vh;
+        align-items: center;
+        justify-content: center;
+    }
+
+
+    .box {
+        /* width: 80%; Adjust the width as needed */
+        max-width: 80vw;
+        /*Limiting maximum width for better readability */
+        height: fit-content;
+        margin: 20px auto;
+        /* Center the box */
+        background-color: plum;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+        box-shadow: 0 0 10px rgba(4, 4, 4, 0.1);
+        transition: box-shadow 0.3s ease-in-out;
+        /* Add transition for box shadow */
+    }
+
+    .box:hover {
+        box-shadow: #555;
+    }
+
+    form {
+        border: none;
+        /* Remove border */
+        display: grid;
+        grid-template-columns: 25% 25% 25% 25%;
+    }
+
+    .input-container {
+        width: 100vw;
+        /* Full width */
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        /* Add box shadow */
+        margin-top: 20px;
+        transition: box-shadow 0.3s, transform 0.3s;
+        /* Add transition for box shadow */
+    }
+
+    .input-container:hover {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        /* Change box shadow on hover */
+        transform: translateY(-5px);
+        /* Lift the input container on hover */
+    }
+
+    input,
+    select {
+        margin: 2px;
+        padding: 10px;
+        border-radius: 15px;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+        transition: all 0.3s ease-in-out;
+        /* Added transition */
+    }
+
+    /* input[type="text"],
+input[type="search"] {
+    width: calc(33.33% - 10px);
+} */
+
+    /* select {
+    width: calc(25% - 10px);
+} */
+
+    input:hover,
+    input:focus,
+    select:hover,
+    select:focus {
+        background-color: lavender;
+        border-color: #999;
+        /* Change border color on hover */
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        box-sizing: border-box;
+    }
+
+    .table-container {
+        padding: 0 10%;
+        margin: 40px auto 0;
+    }
+
+    table {
+        border-collapse: separate;
+        border-spacing: 0;
+        border-radius: 20px;
+        overflow: hidden;
+        background-size: cover;
+        width: 80vw;
+        /* height: 100vh; */
+        box-shadow: -1px 12px 12px -6px rgba(0, 0, 0, 0.5);
+    }
+
+    table,
+    td,
+    th {
+        padding: 20px;
+        /* width: fit-content; */
+        /* max-width :1500px; */
+        height: fit-content;
+        border: 1px solid lightgray;
+        border-collapse: collapse;
+        /* display: inline; */
+        cursor: pointer;
+        text-align: center;
+    }
+
+    colgroup {
+        height: fit-content;
+    }
+
+    td {
+        font-size: 18px;
+    }
+
+    th {
+        background-color: rgb(158, 43, 158);
+        color: white;
+    }
+
+    tr:nth-child(odd) {
+        background-color: rgba(212, 158, 212, 0.646);
+    }
+
+    tr:nth-child(even) {
+        background-color: #ededed;
+    }
+
+    button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        /* background-color: rgb(221, 201, 240); */
+        /* color: rgb(212, 186, 236); */
+        outline: none;
+        cursor: pointer;
+        width: 150px;
+        height: 50px;
+        background-image: linear-gradient(to top, #d8d9db 0%, #fff 80%, #fdfdfd 100%);
+        border-radius: 30px;
+        border: 1px solid #8f9092;
+        transition: all 0.2s ease;
+        font-family: "Source Sans Pro", sans-serif;
+        font-size: 14px;
+        font-weight: 600;
+        color: #606060;
+    }
+
+    button:hover {
+        box-shadow: 0 4px 3px 1px #fcfcfc, 0 6px 8px #d6d7d9, 0 -4px 4px #cecfD1, 0 -6px 4px #fefefe, inset 0 0;
+    }
+
+    button:focus {
+        box-shadow: 0 -5px rgba(255, 255, 255, .5), inset -5px -5px rgba(255, 255, 255, .5), inset -10px -10p
+    }
+
+    #menu {
+        display: none;
+        position: absolute;
+        top: 8vh;
+        border-radius: 10px;
+        background-color: rgb(158, 43, 158);
+        transition: all 200ms ease-in-out;
+    }
+
+    #menu>li {
+        padding: 10px;
+        color: white;
+    }
+
+    #username {
+        color: white;
+        height: 100%;
+        width: 100%;
+        padding: 10px 20px;
+        border-radius: 20px;
+        transition: background-color 0.3s;
+    }
+
+    #username:hover {
+        background-color: #333;
+        cursor: pointer;
+    }
+    .stats{
+        font-size: 2em;
+    }
+</style>
+
+<body>
+    <header>
+        <div class="navbar">
+            <img src="{% static 'mitslogo.jpg' %}" alt="" id="image">
+            <div class="name">MADANAPALLE INSTITUTE OF TECHNOLOGY AND SCIENCE</div>
+            <ul>
+                <li><a class="active" href="{% url 'ExclusiveDashboard' %}">Home</a></li>
+                <li><a href="{% url 'Details' %}">Students</a></li>
+                <li id="mybtn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                        class="bi bi-person-circle" viewBox="0 0 16 16" id="icon">
+                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                        <path fill-rule="evenodd"
+                            d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
+                    </svg>
+                    <div id="username">{{ User.first_name }}</div>
+                    <ul id="menu">
+                        <li><a href="{% url 'create_student' %}">Add Students</a></li>
+                        <li><a href="{% url 'addInternship' %}">Add Internships</a></li>
+                        <li><a href="{% url 'custom_logout' %}">Logout </a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </header>
+    <div class="wrapper">
+        <div class="container">
+            <div class="item1" id="cse">CSE</div>
+            <div class="item1" id="csd">CSD</div>
+            <div class="item1" id="cai">CAI</div>
+            <div class="item1" id="cst">CST</div>
+            <div class="item1" id="ece">ECE</div>
+            <div class="item1" id="eee">EEE</div>
+            <div class="item1" id="mech">MECH</div>
+            <div class="item1" id="civil">CIVIL</div>
+            <div class="item1" id="mba">MBA</div>
+            <div class="item1" id="mca">MCA</div>
+        </div>
+        <div class="cont" id="cont">
+
+        </div>
+
+        <script>
+            const departmentData = {
+                'CSE': {
+                    students_enrolled: 200,
+                    internships: 50,
+                    ongoing: 20,
+                    completed: 30
+                },
+                'CSD': {
+                    students_enrolled: 300,
+                    internships: 40,
+                    ongoing: 10,
+                    completed: 40
+                },
+                'CAI': {
+                    students_enrolled: 400,
+                    internships: 90,
+                    ongoing: 80,
+                    completed: 10
+                },
+                'CST': {
+                    students_enrolled: 100,
+                    internships: 70,
+                    ongoing: 50,
+                    completed: 5
+                },
+                'CSC': {
+                    students_enrolled: 500,
+                    internships: 70,
+                    ongoing: 50,
+                    completed: 5
+                },
+                'ECE': {
+                    students_enrolled: 300,
+                    internships: 100,
+                    ongoing: 80,
+                    completed: 2
+                },
+                'EEE': {
+                    students_enrolled: 100,
+                    internships: 30,
+                    ongoing: 20,
+                    completed: 10
+                },
+                'MECH': {
+                    students_enrolled: 70,
+                    internships: 50,
+                    ongoing: 20,
+                    completed: 5
+                },
+                'CIVIL': {
+                    students_enrolled: 80,
+                    internships: 50,
+                    ongoing: 10,
+                    completed: 2
+                },
+                'MBA': {
+                    students_enrolled: 60,
+                    internships: 30,
+                    ongoing: 34,
+                    completed: 6
+                },
+                'MCA': {
+                    students_enrolled: 90,
+                    internships: 70,
+                    ongoing: 50,
+                    completed: 5
+                }
+                // Add data for other departments as needed
+            };
+
+            const username = document.getElementById('mybtn')
+            const menu = document.getElementById('menu')
+            menu.style.display = "none";
+            username.addEventListener('click', () => {
+                if (menu.style.display == "none") {
+                    menu.style.display = "block";
+                }
+                else {
+                    menu.style.display = "none";
+                }
+            })
+
+            const items = document.querySelectorAll('.item1');
+            items.forEach(item => {
+                item.addEventListener('click', function () {
+                    items.forEach(i => i.classList.remove('selected'));
+                    this.classList.add('selected');
+                    console.log(item.innerText)
+                    console.log("{{User.dept}}")
+                    if (item.innerText == "{{ User.dept }}") {
+                        console.log("Called")
+                        document.getElementById("cont").innerHTML = `<div class="box">
+                <form action="" id="filterForm" autocomplete="off">
+                    <input type="text" id="rollno" placeholder="Rollno" autocomplete="off">
+                    <input type="text" id="studname" placeholder="Student Name" autocomplete="off">
+                    <input type="text" id="company" placeholder="Company Name" autocomplete="off">
+                    <input type="text" id="domain" placeholder="Domain" autocomplete="off">
+                    <select name="status" id="status" autocomplete="off">
+                        <option value="All" selected>Status</option>
+                        <option value="Ongoing">Ongoing</option>
+                        <option value="Completed">Completed</option>
+                    </select>
+                    <select name="year" id="year" autocomplete="off">
+                        <option value="all" selected>Year</option>
+                        <option value="1">I</option>
+                        <option value="2">II</option>
+                        <option value="3">III</option>
+                        <option value="4">IV</option>
+                    </select>
+                    <select name="section" id="section" autocomplete="off">
+                        <!-- <legend>Status</legend> -->
+                        <option value="all" selected>Section</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                        <option value="E">E</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    <div class="buttons" style="display: flex;">
+                        <button type="button" onclick="filterAndDisplayData()">Search</button>
+                        <button type="button" onclick="reset()">Reset</button>
+                    </div>
+                </form>
+
+            </div>
+            <table border-collapse>
+                <colgroup>
+                    <col class="col1">
+                    <col class="col2">
+                    <col class="col3">
+                    <col class="col4">
+                    <col class="col5">
+                    <col class="col6">
+                </colgroup>
+                <thead>
+                    <th>Student Details</th>
+                    <th>Internship Details</th>
+                    <th>Project name</th>
+                    <th>Type</th>
+                    <th>Start/End Date</th>
+                    <th>Status</th>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>`
+            document.getElementsByClassName('cont')[0].style.display = 'block';
+                        displayData(studentData);
+                    }
+                    else {
+                        console.log("Else called")
+                        var imgsrc = ""
+                        if (item.innerText == "CSE") imgsrc = "{% static 'CSE.png' %}"
+                        if (item.innerText == "CSD") imgsrc = "{% static 'CSD.png' %}"
+                        if (item.innerText == "CAI") imgsrc = "{% static 'CAI.png' %}"
+                        if (item.innerText == "CST") imgsrc = "{% static 'CST.png' %}"
+                        if (item.innerText == "ECE") imgsrc = "{% static 'ECE.png' %}"
+                        if (item.innerText == "EEE") imgsrc = "{% static 'EEE.png' %}"
+                        if (item.innerText == "MECH") imgsrc = "{% static 'MECH.png' %}"
+                        if (item.innerText == "CIVIL") imgsrc = "{% static 'CIVIL.png' %}"
+                        if (item.innerText == "MBA") imgsrc = "{% static 'MBA.png' %}"
+                        if (item.innerText == "MCA") imgsrc = "{% static 'MCA.png' %}"
+                        console.log(imgsrc)
+                        document.getElementById("cont").innerHTML = `<img src="${imgsrc}" alt="Image" style=" width: 15%; float: left; margin - right: 10px; ">
+                        <div class="stats" style = "margin-left: 10px;">
+                            <p>No of Students: ${departmentData[item.innerText].students_enrolled}</p>
+                            <p>Status of Internships: ${departmentData[item.innerText].internships}</p>
+                            <p>Ongoing Internships: ${departmentData[item.innerText].ongoing}</p>
+                            <p>Completed Internships: ${departmentData[item.innerText].completed}</p>
+	        			</div >
+                        <div style="clear:both ;"></div>`
+                        
+            document.getElementsByClassName('cont')[0].style.display = 'flex';
+
+                    }
+                });
+            });
+            function filterAndDisplayData() {
+                const rollno = document.getElementById('rollno').value.trim().toLowerCase();
+                const studname = document.getElementById('studname').value.trim().toLowerCase();
+                const company = document.getElementById('company').value.trim().toLowerCase();
+                const year = document.getElementById('year').value.trim().toLowerCase();
+                const section = document.getElementById('section').value.trim().toLowerCase();
+                const intern_status = document.getElementById('status').value.trim().toLowerCase();
+                const domain = document.getElementById('domain').value.trim().toLowerCase();
+
+
+                let filteredData = studentData;
+                console.log("Original Data:", filteredData);
+
+                if (rollno !== "") {
+                    console.log("Filtering by Roll Number:", rollno);
+                    filteredData = filteredData.filter(student => {
+                        // return student.rollNo.toLowerCase() === rollno;
+                        return student.rollNo.toLowerCase().includes(rollno);
+                    });
+                }
+
+                console.log("After Roll Number Filter:", filteredData);
+
+                if (studname !== "") {
+                    console.log("Filtering by Student Name:", studname);
+                    filteredData = filteredData.filter(student => {
+                        // return student.studName.toLowerCase() === studname;
+                        return student.studName.toLowerCase().includes(studname);
+                    });
+                }
+
+                console.log("After Student Name Filter:", filteredData);
+
+                if (company !== "") {
+                    console.log("Filtering by Company:", company);
+                    filteredData = filteredData.filter(student => {
+                        // return student.company.toLowerCase() === company;
+                        return student.company.toLowerCase().includes(company);
+                    });
+                }
+                if (domain !== "") {
+                    console.log("Filtering by Domain:", domain);
+                    filteredData = filteredData.filter(student => {
+                        // return student.company.toLowerCase() === company;
+                        return student.domain.toLowerCase().includes(domain);
+                    });
+                }
+                console.log("After Company Filter:", filteredData);
+
+                if (year !== "all") {
+                    console.log("Filtering by Year:", year);
+                    filteredData = filteredData.filter(student => {
+                        return student.year.toLowerCase() === year.toLowerCase();
+                    });
+                }
+
+
+
+                console.log("After Year Filter:", filteredData);
+
+                if (section !== "all") {
+                    console.log("Filtering by Year:", section);
+                    filteredData = filteredData.filter(student => {
+                        return student.section.toLowerCase() === section.toLowerCase();
+                    });
+                }
+
+                if (intern_status !== "all") {
+                    console.log("Filtering by status:", intern_status);
+                    filteredData = filteredData.filter(student => {
+                        return student.current_status.toLowerCase() === intern_status.toLowerCase();
+                    });
+                }
+
+                console.log("After Status Filter:", filteredData);
+
+
+                displayData(filteredData);
+
+            }
+            function displayData(data) {
+                const tableBody = document.querySelector('tbody');
+                tableBody.innerHTML = "";
+
+                data.forEach(student => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+            <td>${student.studName},${student.rollNo},${student.year},${student.section}</td>
+            <td>${student.company},${student.domain}</td>
+            <td>${student.project_name}</td>
+            <td>${student.type}</td>
+            <td>${student.start_date}/${student.End_date}</td>
+            <td>${student.current_status}</td>
+        `;
+                    tableBody.appendChild(row);
+                });
+            }
+            function reset() {
+                document.getElementById('rollno').value = "";
+                document.getElementById('studname').value = "";
+                document.getElementById('company').value = "";
+                document.getElementById('year').value = "";
+                document.getElementById('section').value = "";
+                document.getElementById('status').value = "";
+                document.getElementById('domain').value = "";
+                displayData(studentData)
+            }
+            const studentData = [
+                {% for student in studentData %}
+            {
+                rollNo: "{{student.rollno.rollno}}",
+                    studName: "{{student.rollno.name}}",
+                        section: "{{student.rollno.section}}",
+                            company: "{{student.internshipName}}",
+                                domain: '{{student.domain}}',
+                                    type: '{{student.intern_type}}',
+                                        project_name: "{{student.projectName}}",
+                                            current_status: "{{student.status}}",
+                                                year: "{{student.rollno.year}}",
+                                                    section: '{{student.rollno.section}}',
+                                                        start_date: '{{student.sdate}}',
+                                                            End_date: '{{student.edate}}'
+            },
+            {% endfor %}
+            ];
+
+            console.log(studentData);
+
+            document.getElementById('{{ User.dept }}'.toLocaleLowerCase()).click()
+        </script>
+</body>
+
+</html>
